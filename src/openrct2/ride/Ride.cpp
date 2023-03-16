@@ -3667,7 +3667,7 @@ ResultWithMessage Ride::CreateVehicles(const CoordsXYE& element, bool isApplying
                 }
                 else
                 {
-                    vehicle->SetFlag(VehicleFlags::Intangible);
+                    vehicle->SetFlag(VehicleFlags::Invisible);
                 }
             }
         }

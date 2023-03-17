@@ -4128,7 +4128,7 @@ void Guest::UpdateRideEnterVehicle()
             vehicle->Invalidate();
             if (ride->mode == RideMode::WaterSlide)
             {
-                vehicle->ClearFlag(VehicleFlags::Invisible);
+                vehicle->GetHead()->WaterSlideSetReady();
             }
 
             MoveTo({ kLocationNull, 0, 0 });
@@ -4279,7 +4279,7 @@ void Guest::UpdateRideLeaveVehicle()
 
             if (ride->mode == RideMode::WaterSlide && vehicle->num_peeps == 0)
             {
-                vehicle->WaterSlideSetWaiting();
+                vehicle->GetHead()->WaterSlideSetWaiting();
             }
 
             PeepGoToRideExit(

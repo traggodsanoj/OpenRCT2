@@ -4504,7 +4504,8 @@ void Vehicle::UpdateDoingCircusShow()
     }
 }
 
-void Vehicle::UpdateWaterSlideWaiting() {
+void Vehicle::UpdateWaterSlideWaiting()
+{
     auto prevTrain = GetEntity<Vehicle>(GetHead()->prev_vehicle_on_ride)->GetHead();
     if ((prevTrain != nullptr && prevTrain->status == Status::Travelling) || GetRide()->NumTrains == 1)
     {
@@ -8946,8 +8947,8 @@ void Vehicle::WaterSlideSetWaiting()
     }
     GetHead()->SetState(Vehicle::Status::WaterSlideWaiting);
 
-    //Bypass station count check for test results
-    //If this is not done, each boat has to cycle twice before results appear
+    // Bypass station count check for test results
+    // If this is not done, each boat has to cycle twice before results appear
     if (!(GetRide()->lifecycle_flags & RIDE_LIFECYCLE_TESTED) && (HasFlag(VehicleFlags::Testing)))
     {
         UpdateTestFinish();
@@ -8969,7 +8970,7 @@ void Vehicle::WaterSlideRespawnVehicle()
     {
         CoordsXYZ stationCoords = { entranceStation->Start, entranceStation->GetBaseZ() };
         auto trackElement = MapGetTrackElementAt(stationCoords);
-        
+
         GetRide()->VehicleRespawnTrain(*GetRide(), GetHead(), stationCoords, trackElement);
     }
 }

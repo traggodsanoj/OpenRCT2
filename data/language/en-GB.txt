@@ -3797,3 +3797,5 @@ STR_6735    :Go up to parent folder
 STR_6736    :Water slide mode
 STR_6737    :Waiting
 STR_6738    :Unable to operate without exactly two stations in this mode
+STR_6739    :First station must have an entrance in this mode
+STR_6740    :Last station must have only an exit in this mode

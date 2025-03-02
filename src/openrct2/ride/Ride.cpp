@@ -2625,7 +2625,10 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
 
     uint8_t entrance = 0;
     uint8_t exit = 0;
-    for (const auto& station : ride->GetStations())
+    bool lentrance = false;
+    bool lexit = false;
+    const auto stations = ride->GetStations();
+    for (const auto& station : stations)
     {
         if (station.Start.IsNull())
             continue;
@@ -2633,11 +2636,21 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
         if (!station.Entrance.IsNull())
         {
             entrance = 1;
+            lentrance = true;
+        }
+        else
+        {
+            lentrance = false;
         }
 
         if (!station.Exit.IsNull())
         {
             exit = 1;
+            lexit = true;
+        }
+        else
+        {
+            lexit = false;
         }
 
         // If station start and no entrance/exit
@@ -2657,6 +2670,18 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
     if (exit == 0)
     {
         return { false, STR_EXIT_NOT_YET_BUILT };
+    }
+
+    if (ride->mode == RideMode::WaterSlide)
+    {
+        if (stations.front().Entrance.IsNull())
+        {
+            return { false, STR_FIRST_STATION_REQUIRES_ENTRANCE };
+        }
+        if (!lexit || lentrance)
+        {
+            return { false, STR_LAST_STATION_EXIT_ONLY};
+        }
     }
 
     return { true };
@@ -5029,7 +5054,10 @@ static int32_t RideGetTrackLength(const Ride& ride)
     for (const auto& station : ride.GetStations())
     {
         trackStart = station.GetStart();
-        if (trackStart.IsNull() || station.Entrance.IsNull())
+        if (trackStart.IsNull())
+            continue;
+        // WaterSlide mode requires entrance on first station
+        if (station.Entrance.IsNull() && ride.mode == RideMode::WaterSlide)
             continue;
 
         tileElement = MapGetFirstElementAt(trackStart);

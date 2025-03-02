@@ -2625,8 +2625,8 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
 
     uint8_t entrance = 0;
     uint8_t exit = 0;
-    bool lentrance = false;
-    bool lexit = false;
+    bool lastEntrance = false;
+    bool lastExit = false;
     const auto stations = ride->GetStations();
     for (const auto& station : stations)
     {
@@ -2636,21 +2636,21 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
         if (!station.Entrance.IsNull())
         {
             entrance = 1;
-            lentrance = true;
+            lastEntrance = true;
         }
         else
         {
-            lentrance = false;
+            lastEntrance = false;
         }
 
         if (!station.Exit.IsNull())
         {
             exit = 1;
-            lexit = true;
+            lastExit = true;
         }
         else
         {
-            lexit = false;
+            lastExit = false;
         }
 
         // If station start and no entrance/exit
@@ -2678,7 +2678,7 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
         {
             return { false, STR_FIRST_STATION_REQUIRES_ENTRANCE };
         }
-        if (!lexit || lentrance)
+        if (!lastExit || lastEntrance)
         {
             return { false, STR_LAST_STATION_EXIT_ONLY};
         }

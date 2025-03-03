@@ -1339,8 +1339,8 @@ void Vehicle::Update()
         case Vehicle::Status::DoingCircusShow:
             UpdateDoingCircusShow();
             break;
-        case Vehicle::Status::WaterSlideWaiting:
-            UpdateWaterSlideWaiting();
+        case Vehicle::Status::OneWayWaiting:
+            UpdateOneWayWaiting();
             break;
         default:
             break;
@@ -2581,7 +2581,7 @@ void Vehicle::UpdateDeparting()
         case RideMode::RotatingLift:
         case RideMode::FreefallDrop:
         case RideMode::BoatHire:
-        case RideMode::WaterSlide:
+        case RideMode::OneWay:
             if (carEntry.flags & CAR_ENTRY_FLAG_POWERED)
                 break;
 
@@ -3491,9 +3491,9 @@ void Vehicle::UpdateUnloadingPassengers()
         UpdateTestFinish();
     }
 
-    if (curRide->mode == RideMode::WaterSlide)
+    if (curRide->mode == RideMode::OneWay)
     {
-        this->WaterSlideSetWaiting();
+        this->OneWaySetWaiting();
         return;
     }
 
@@ -4504,12 +4504,12 @@ void Vehicle::UpdateDoingCircusShow()
     }
 }
 
-void Vehicle::UpdateWaterSlideWaiting()
+void Vehicle::UpdateOneWayWaiting()
 {
     auto prevTrain = GetEntity<Vehicle>(GetHead()->prev_vehicle_on_ride)->GetHead();
     if ((prevTrain != nullptr && prevTrain->status == Status::Travelling) || GetRide()->NumTrains == 1)
     {
-        WaterSlideRespawnVehicle();
+        OneWayRespawnVehicle();
     }
 }
 
@@ -8938,14 +8938,14 @@ void Vehicle::EnableCollisionsForTrain()
     }
 }
 
-void Vehicle::WaterSlideSetWaiting()
+void Vehicle::OneWaySetWaiting()
 {
     for (auto vehicle = GetHead(); vehicle != nullptr; vehicle = GetEntity<Vehicle>(vehicle->next_vehicle_on_train))
     {
         vehicle->SetFlag(VehicleFlags::CollisionDisabled);
         vehicle->SetFlag(VehicleFlags::Invisible);
     }
-    GetHead()->SetState(Vehicle::Status::WaterSlideWaiting);
+    GetHead()->SetState(Vehicle::Status::OneWayWaiting);
 
     // Bypass station count check for test results
     // If this is not done, each boat has to cycle twice before results appear
@@ -8955,7 +8955,7 @@ void Vehicle::WaterSlideSetWaiting()
     }
 }
 
-void Vehicle::WaterSlideRespawnVehicle()
+void Vehicle::OneWayRespawnVehicle()
 {
     RideStation* entranceStation = nullptr;
     for (auto& station : GetRide()->GetStations())
@@ -8975,7 +8975,7 @@ void Vehicle::WaterSlideRespawnVehicle()
     }
 }
 
-void Vehicle::WaterSlideSetReady()
+void Vehicle::OneWaySetReady()
 {
     for (auto vehicle = GetHead(); vehicle != nullptr; vehicle = GetEntity<Vehicle>(vehicle->next_vehicle_on_train))
     {

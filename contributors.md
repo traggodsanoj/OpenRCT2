@@ -112,7 +112,7 @@ Appreciation for contributors who have provided substantial work, but are no lon
 * Umar Ahmed (umar-ahmed) - MacOS file watcher
 * Andrew Arnold (fidwell) - Misc.
 * Josh Trzebiatowski (trzejos) - Ride and scenery filtering
-* (kyphii) - Extended color selection, reversed ride vehicles, water slide operating mode, misc.
+* (kyphii) - Extended color selection, reversed ride vehicles, one-way operating mode, misc.
 * Phumdol Lookthipnapha (beam41) - Misc.
 * Nikolas Parshook (nparshook) - Misc.
 * Wenzhao Qiu (qwzhaox) - Misc.
@@ -123,6 +123,7 @@ Appreciation for contributors who have provided substantial work, but are no lon
 * John Dolph (johnwdolph) - Ride music UI, misc.
 * Harry Hopkinson (Harry-Hopkinson) - Added Cheat for guests ignoring price of rides and stalls.
 * Kendall Frey (kendfrey) - Add plugin API for spawning guests
+* Jonas Doggart (Elessar2) - One-way operating mode
 
 ## Bug fixes & Refactors
 * Claudio Tiecher (janclod)

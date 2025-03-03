@@ -594,7 +594,7 @@ constexpr uint64_t kAllRideModesAvailable = EnumsToFlags(
     RideMode::SpaceRings, RideMode::Beginners, RideMode::LimPoweredLaunch, RideMode::FilmThrillRiders,
     RideMode::StormChasers3DFilm, RideMode::SpaceRaiders3DFilm, RideMode::Intense, RideMode::Berserk, RideMode::HauntedHouse,
     RideMode::Circus, RideMode::DownwardLaunch, RideMode::CrookedHouse, RideMode::FreefallDrop, RideMode::PoweredLaunch,
-    RideMode::PoweredLaunchBlockSectioned, RideMode::WaterSlide);
+    RideMode::PoweredLaunchBlockSectioned, RideMode::OneWay);
 
 extern const CarEntry kCableLiftVehicle;
 

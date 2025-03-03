@@ -31,7 +31,7 @@ constexpr RideTypeDescriptor AlpineCoasterRTD =
                           RtdFlag::allowMusic, RtdFlag::interestingToLookAt, RtdFlag::supportsMultipleColourSchemes,
                           RtdFlag::canSynchroniseWithAdjacentStations, RtdFlag::hasEntranceAndExit,
                           RtdFlag::noTestMode, RtdFlag::allowMoreVehiclesThanStationFits, RtdFlag::upInclineRequiresLift),
-    .RideModes = EnumsToFlags(RideMode::ContinuousCircuit),
+    .RideModes = EnumsToFlags(RideMode::ContinuousCircuit, RideMode::OneWay),
     .DefaultMode = RideMode::ContinuousCircuit,
     .TrackSpeedSettings = { 10, 10 },
     .Naming = { STR_RIDE_NAME_ALPINE_COASTER, STR_RIDE_DESCRIPTION_ALPINE_COASTER },

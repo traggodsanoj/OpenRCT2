@@ -99,7 +99,7 @@ struct Vehicle : EntityBase
         Stopping1B,
         UnloadingPassengers1C,
         StoppedByBlockBrakes,
-        WaterSlideWaiting,
+        OneWayWaiting,
     };
 
     Type SubType;
@@ -234,9 +234,9 @@ struct Vehicle : EntityBase
     void UpdateAnimationAnimalFlying();
     void EnableCollisionsForTrain();
 
-    void WaterSlideSetWaiting();
-    void WaterSlideRespawnVehicle();
-    void WaterSlideSetReady();
+    void OneWaySetWaiting();
+    void OneWayRespawnVehicle();
+    void OneWaySetReady();
 
     /**
      * Instantly moves the specific car forward or backwards along the track.
@@ -325,7 +325,7 @@ private:
     void UpdateWaitingForCableLift();
     void UpdateShowingFilm();
     void UpdateDoingCircusShow();
-    void UpdateWaterSlideWaiting();
+    void UpdateOneWayWaiting();
     void UpdateCrossings() const;
     void UpdateSound();
     void GetLiftHillSound(const Ride& curRide, SoundIdVolume& curSound);

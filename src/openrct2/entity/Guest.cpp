@@ -4126,9 +4126,9 @@ void Guest::UpdateRideEnterVehicle()
 
             vehicle->ApplyMass(Mass);
             vehicle->Invalidate();
-            if (ride->mode == RideMode::WaterSlide)
+            if (ride->mode == RideMode::OneWay)
             {
-                vehicle->WaterSlideSetReady();
+                vehicle->OneWaySetReady();
             }
 
             MoveTo({ kLocationNull, 0, 0 });

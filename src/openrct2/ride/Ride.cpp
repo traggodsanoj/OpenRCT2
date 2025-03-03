@@ -912,7 +912,7 @@ bool Ride::SupportsStatus(RideStatus s) const
         case RideStatus::Simulating:
             return (!rtd.HasFlag(RtdFlag::noTestMode) && rtd.HasFlag(RtdFlag::hasTrack));
         case RideStatus::Testing:
-            return !rtd.HasFlag(RtdFlag::noTestMode) && mode != RideMode::WaterSlide;
+            return !rtd.HasFlag(RtdFlag::noTestMode) && mode != RideMode::OneWay;
         case RideStatus::Count: // Meaningless but necessary to satisfy -Wswitch
             return false;
     }
@@ -2569,7 +2569,7 @@ static ResultWithMessage RideModeCheckValidStationNumbers(const Ride& ride)
             if (numStations >= 2)
                 return { true };
             return { false, STR_UNABLE_TO_OPERATE_WITH_LESS_THAN_TWO_STATIONS_IN_THIS_MODE };
-        case RideMode::WaterSlide:
+        case RideMode::OneWay:
             if (numStations == 2)
                 return { true };
             return { false, STR_UNABLE_TO_OPERATE_WITHOUT_TWO_STATIONS_IN_THIS_MODE };
@@ -2672,7 +2672,7 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
         return { false, STR_EXIT_NOT_YET_BUILT };
     }
 
-    if (ride->mode == RideMode::WaterSlide)
+    if (ride->mode == RideMode::OneWay)
     {
         if (stations.front().Entrance.IsNull())
         {
@@ -3684,12 +3684,12 @@ ResultWithMessage Ride::CreateVehicles(const CoordsXYE& element, bool isApplying
                     vehicle->UpdateTrackMotion(nullptr);
                 }
 
-                if (mode == RideMode::WaterSlide)
+                if (mode == RideMode::OneWay)
                 {
-                    vehicle->WaterSlideSetWaiting();
+                    vehicle->OneWaySetWaiting();
                     if (i == 0)
                     {
-                        vehicle->WaterSlideRespawnVehicle();
+                        vehicle->OneWayRespawnVehicle();
                     }
                 }
                 else
@@ -5056,8 +5056,8 @@ static int32_t RideGetTrackLength(const Ride& ride)
         trackStart = station.GetStart();
         if (trackStart.IsNull())
             continue;
-        // WaterSlide mode requires entrance on first station
-        if (station.Entrance.IsNull() && ride.mode == RideMode::WaterSlide)
+        // OneWay mode requires entrance on first station
+        if (station.Entrance.IsNull() && ride.mode == RideMode::OneWay)
             continue;
 
         tileElement = MapGetFirstElementAt(trackStart);
@@ -5193,7 +5193,7 @@ void Ride::UpdateMaxVehicles()
             case RideMode::PoweredLaunch:
                 maxNumTrains = 1;
                 break;
-            case RideMode::WaterSlide:
+            case RideMode::OneWay:
             {
                 int32_t trainLength = 0;
                 for (int32_t i = 0; i < newCarsPerTrain; i++)

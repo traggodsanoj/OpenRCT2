@@ -3491,7 +3491,8 @@ void Vehicle::UpdateUnloadingPassengers()
         UpdateTestFinish();
     }
 
-    if (curRide->mode == RideMode::OneWay)
+    // There has to be a better way to do this, right now all middle stations need an entrance
+    if (curRide->mode == RideMode::OneWay && currentStation.Entrance.IsNull())
     {
         this->OneWaySetWaiting();
         return;

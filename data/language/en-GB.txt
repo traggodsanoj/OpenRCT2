@@ -3796,6 +3796,6 @@ STR_6734    :Map elements that are at or above the cutting height are rendered t
 STR_6735    :Go up to parent folder
 STR_6736    :One-Way mode
 STR_6737    :Waiting
-STR_6738    :Unable to operate without exactly two stations in this mode
+STR_6738    :All middle stations require entrances in this mode
 STR_6739    :First station must have an entrance in this mode
 STR_6740    :Last station must have only an exit in this mode

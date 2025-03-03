@@ -2565,14 +2565,15 @@ static ResultWithMessage RideModeCheckValidStationNumbers(const Ride& ride)
             if (numStations <= 1)
                 return { true };
             return { false, STR_UNABLE_TO_OPERATE_WITH_MORE_THAN_ONE_STATION_IN_THIS_MODE };
+        case RideMode::OneWay:
         case RideMode::Shuttle:
             if (numStations >= 2)
                 return { true };
             return { false, STR_UNABLE_TO_OPERATE_WITH_LESS_THAN_TWO_STATIONS_IN_THIS_MODE };
-        case RideMode::OneWay:
-            if (numStations == 2)
-                return { true };
-            return { false, STR_UNABLE_TO_OPERATE_WITHOUT_TWO_STATIONS_IN_THIS_MODE };
+        //case RideMode::OneWay:
+        //    if (numStations == 2)
+        //        return { true };
+        //    return { false, STR_UNABLE_TO_OPERATE_WITHOUT_TWO_STATIONS_IN_THIS_MODE };
         default:
         {
             // This is workaround for multiple compilation errors of type "enumeration value ‘RIDE_MODE_*' not handled
@@ -2625,6 +2626,7 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
 
     uint8_t entrance = 0;
     uint8_t exit = 0;
+    uint8_t totSations = 0;
     bool lastEntrance = false;
     bool lastExit = false;
     const auto stations = ride->GetStations();
@@ -2633,9 +2635,11 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
         if (station.Start.IsNull())
             continue;
 
+        ++totSations;
+
         if (!station.Entrance.IsNull())
         {
-            entrance = 1;
+            ++entrance;
             lastEntrance = true;
         }
         else
@@ -2680,7 +2684,10 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
         }
         if (!lastExit || lastEntrance)
         {
-            return { false, STR_LAST_STATION_EXIT_ONLY};
+            return { false, STR_LAST_STATION_EXIT_ONLY };
+        }
+        if ((entrance + 1) < totSations) {
+            return { false, STR_UNABLE_TO_OPERATE_WITHOUT_TWO_STATIONS_IN_THIS_MODE };
         }
     }
 

@@ -2687,7 +2687,7 @@ static ResultWithMessage RideCheckForEntranceExit(RideId rideIndex)
             return { false, STR_LAST_STATION_EXIT_ONLY };
         }
         if ((entrance + 1) < totSations) {
-            return { false, STR_UNABLE_TO_OPERATE_WITHOUT_TWO_STATIONS_IN_THIS_MODE };
+            return { false, STR_MIDDLE_STATIONS_REQUIRE_ENTRANCE };
         }
     }
 
